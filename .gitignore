@@ -1,0 +1,6 @@
+# throw anything to ignore in here
+ignore
+
+# IntelliJ
+*.iml
+.idea
