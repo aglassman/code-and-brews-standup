@@ -13,6 +13,6 @@ Code & Brews Standup is an app that allows Code & Brews participants to share th
 * Flag a user for moderation.
 
 # Technologies
-Vue
-Vuetify
-Firebase
+* Vue
+* Vuetify
+* Firebase
