@@ -1,0 +1,57 @@
+{
+  "name": "wf-admin-tool",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --mode development",
+    "build": "vue-cli-service build --mode production",
+    "lint": "vue-cli-service lint",
+    "deploy": "firebase deploy",
+    "storybook:build": "vue-cli-service storybook:build -c config/storybook",
+    "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "firebase": "^7.13.1",
+    "flat": "^4.1.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "vue": "^2.6.10",
+    "vue-clipboard2": "^0.3.0",
+    "vue-moment": "^4.0.0",
+    "vue-resource": "^1.5.1",
+    "vue-router": "^3.0.3",
+    "vuetify": "^1.5.5",
+    "vuex": "^3.0.1",
+    "vuex-persist": "^2.0.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^5.0.0",
+    "@storybook/addon-knobs": "^5.0.0",
+    "@storybook/addon-links": "^5.0.0",
+    "@storybook/addon-notes": "^5.0.0",
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "lint-staged": "^8.1.5",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "vue-cli-plugin-storybook": "~0.6.1",
+    "vue-cli-plugin-vuetify": "^0.5.0",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.0.5"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /events/{document=**} {
+      allow read: if request.auth != null;
+      allow write: if isAdministrator();
+    }
+
+    match /standup-entries/{standup-entry} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (
+        isAdministrator() || isOwner()
+      );
+    }
+
+    match /user-details/{user-detail} {
+      allow read: if request.auth != null;
+      allow write: if isAdministrator() || isOwner();
+    }
+
+    function isModerator() {
+      return isAdministrator() || request.auth.token.moderator == true;
+    }
+
+    function isOwner() {
+      return resource.data.ownerId == request.auth.uid;
+    }
+
+    function isAdministrator() {
+      return request.auth != null
+        && (
+            request.auth.uid == 'iP2sv66XMbQoWQI9vwxIny861I82'
+            || request.auth.token.admin == true);
+    }
+
+  }
+}

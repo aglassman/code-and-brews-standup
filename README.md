@@ -16,3 +16,27 @@ Code & Brews Standup is an app that allows Code & Brews participants to share th
 * Vue
 * Vuetify
 * Firebase
+
+# How to Run
+```shell script
+cd app
+npm install
+npm run serve
+```
+
+# Firebase
+When developing locally against firebase APIs:
+```shell script
+# Ensure firebase tools are installed
+npm install -g firebase-tools
+cd app
+firebase emulators:start
+```
+
+# Build & Deploy
+```shell script
+cd app
+npm run build
+# must be logged into firebase as the user who owns the firebase project.
+npm run deploy
+```
