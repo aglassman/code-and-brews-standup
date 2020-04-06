@@ -18,7 +18,7 @@ addDecorator(() => ({
 
 addDecorator(withKnobs)
 
-const events = require.context('../../src/components/events', true, /.stories.js$/)
+const events = require.context('../../src/', true, /.stories.js$/)
 
 function loadStories () {
   events.keys().forEach(filename => events(filename))
