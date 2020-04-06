@@ -26,16 +26,17 @@ export default new Router({
       }
     },
     {
+      path: '/events/:eventId/standup',
+      props: true,
+      name: 'standup',
+      component: () => import(/* webpackChunkName: "standup" */ './views/Standup.vue')
+    },
+    {
       path: '/events',
       name: 'events',
       component: () => import(/* webpackChunkName: "events" */ './views/Events.vue')
     },
-    // {
-    //   path: '/events/:eventId',
-    //   props: true,
-    //   name: 'event',
-    //   component: () => import(/* webpackChunkName: "organization" */ './components/event/event.vue')
-    // },
+
     // {
     //   path: '/events/:eventId/standup',
     //   props: true,

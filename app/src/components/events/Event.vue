@@ -12,6 +12,11 @@
         dark
         @click="rsvp"
       >RSVP</v-btn>
+      <v-btn
+        flat
+        dark
+        :to="{name: 'standup', props: {eventId: eventId}}"
+      >STANDUP</v-btn>
       <v-spacer></v-spacer>
       <v-icon dark>group</v-icon>
       <span style="padding-left: 5px">{{rsvpCount}}</span>
@@ -23,6 +28,7 @@
 export default {
   name: 'Event',
   props: [
+    'eventId',
     'title',
     'date',
     'description',

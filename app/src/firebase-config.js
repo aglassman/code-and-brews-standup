@@ -48,22 +48,42 @@ var FirebaseApp = {
         })
     }
 
+    let modifyClaimsCloudFunction = firebase.functions().httpsCallable('modifyClaims')
+
+    let modifyClaims = (targetUid, isAdmin, isModerator) => {
+      modifyClaimsCloudFunction({
+        targetUid: targetUid,
+        claim: {
+          admin: isAdmin,
+          moderator: isModerator
+        }
+      })
+        .then((result) => {
+          console.log(result)
+        })
+    }
+
     let useVuex = options.store !== undefined
 
     if (useVuex) {
       options.store.registerModule('user', {
         namespaced: true,
         state: {
-          user: null
+          user: null,
+          token: null
         },
         mutations: {
-          set (state, user) {
+          user (state, user) {
             state.user = user
+          },
+          token (state, token) {
+            state.token = token
           }
         },
         actions: {
           login: login,
-          logout: logout
+          logout: logout,
+          modifyClaims: modifyClaims
         },
         getters: {
           isLoggedIn: state => {
@@ -80,6 +100,12 @@ var FirebaseApp = {
           },
           userName: state => {
             return state.user ? state.user.displayName : null
+          },
+          isAdmin: state => {
+            return !!state.token.claims.admin
+          },
+          isModerator: state => {
+            return !!state.token.claims.moderator
           }
         }
       })
@@ -88,7 +114,21 @@ var FirebaseApp = {
         .auth()
         .onAuthStateChanged(function (user) {
           if (user) {
-            options.store.commit('user/set', user)
+            // Set user in store
+            options.store.commit('user/user', user)
+            // Get token to access custom claims
+            user.getIdTokenResult()
+              .then((idTokenResult) => {
+                options.store.commit('user/token', idTokenResult)
+              })
+              .catch((error) => {
+                console.log(error)
+              })
+            // Add listener to pickup claim changes on token refresh
+            let metadataRef = firebase.database().ref('metadata/' + user.uid + '/refreshTime')
+            metadataRef.on('value', (snapshot) => {
+              user.getIdToken(true)
+            })
           } else {
             options.store.commit('user/set', null)
           }
